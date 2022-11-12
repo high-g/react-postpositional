@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import kuromoji from 'kuromoji'
+
+// 辞書格納フォルダパス
+const DIC_URL = '/dict'
+
+// WordCloudの情報として抽出する品詞（助詞、助動詞などは意味がないので拾わない）
+const TARGET_POS = ['名詞', '動詞', '形容詞']
+
+// kuromoji.jsの解析結果の値で特に値がない場合は以下の文字が設定される
+const NO_CONTENT = '*'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>hello</p>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
