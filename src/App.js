@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import kuromoji from 'kuromoji'
+import { builder, IpadicFeatures, TokenizerBuilder } from 'kuromoji'
 
 const text = `そこも場合もうその病気らに対して旨の時がしんませ。
 単に事実に使用方はどうかその応用たないでもが思いてならないがも発展思いうべきて、
@@ -17,17 +17,25 @@ const NO_CONTENT = '*'
 
 function App() {
   useEffect(() => {
-    kuromoji.builder({ dicPath: DIC_URL }).build((err, tokenizer) => {
-      console.log('err', err)
-      if (err) {
-        console.log(err)
-        return
-      }
+    const f = async () => {
+      const defaultBuilder = await builder({ dicPath: 'node_modules/kuromoji/dict' })
+      console.log('defaultBuilder', defaultBuilder)
+    }
 
-      const tokens = tokenizer.tokenize(text)
+    f()
 
-      console.log('tokens', tokens)
-    })
+    // builder({ dicPath: DIC_URL }).build((err, tokenizer) => {
+    //   console.log('err', err)
+    //   if (err) {
+    //     console.log(err)
+    //     return
+    //   }
+
+    //   const tokens = tokenizer.tokenize(text)
+
+    //   console.log('tokens', tokens)
+    // })
+    return () => {}
   }, [])
 
   return (
