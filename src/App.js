@@ -1,10 +1,7 @@
-import { useEffect } from 'react'
-import { builder, IpadicFeatures, TokenizerBuilder } from 'kuromoji'
+import { useEffect, useState } from 'react'
+import css from './App.module.css'
 
-const text = `そこも場合もうその病気らに対して旨の時がしんませ。
-単に事実に使用方はどうかその応用たないでもが思いてならないがも発展思いうべきて、
-...
-`
+const text = `私の名前はフロントエンジにゃーです。`
 
 // 辞書格納フォルダパス
 const DIC_URL = '/dict'
@@ -16,13 +13,19 @@ const TARGET_POS = ['名詞', '動詞', '形容詞']
 const NO_CONTENT = '*'
 
 function App() {
-  useEffect(() => {
-    const f = async () => {
-      const defaultBuilder = await builder({ dicPath: 'node_modules/kuromoji/dict' })
-      console.log('defaultBuilder', defaultBuilder)
-    }
+  const [words, setWords] = useState([])
 
-    f()
+  useEffect(() => {
+    const defaultBuilder = window.kuromoji.builder({ dicPath: 'https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/' })
+    defaultBuilder.build((err, tokenizer) => {
+      if (err) {
+        console.log(err)
+      } else {
+        const result = tokenizer.tokenize(text)
+        console.log('result', result)
+        setWords(result)
+      }
+    })
 
     // builder({ dicPath: DIC_URL }).build((err, tokenizer) => {
     //   console.log('err', err)
@@ -39,8 +42,16 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
-      <p>hello</p>
+    <div>
+      <p className={css.main}>
+        {words.map((item, key) => {
+          return (
+            <span key={key} className={item.pos === '助詞' && css.min}>
+              {item.surface_form}
+            </span>
+          )
+        })}
+      </p>
     </div>
   )
 }
